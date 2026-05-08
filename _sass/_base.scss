@@ -4,6 +4,18 @@
 
 // Typography
 
+body {
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
 p,
 h1,
 h2,
@@ -190,6 +202,46 @@ ul.task-list input[type="checkbox"] {
   color: var(--global-theme-color);
 }
 
+// Quick facts grid (about page) — sits at top beside the floated photo.
+// The bio paragraph that follows clears the photo so it starts below.
+
+.quick-facts {
+  display: grid;
+  grid-template-columns: minmax(110px, max-content) 1fr;
+  gap: 2.5rem 1.75rem;
+  margin: 1.5rem 0 2rem;
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--global-divider-color);
+  border-bottom: 1px solid var(--global-divider-color);
+
+  dt {
+    color: var(--global-text-color-light, #6c757d);
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.92rem;
+    letter-spacing: 0.06em;
+    align-self: center;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+}
+
+// Bio paragraph(s) that follow the quick-facts box on about page.
+.quick-facts ~ p {
+  font-size: 1.1rem;
+  line-height: 1.65;
+}
+
+// Bio paragraph that follows quick-facts: clear the floated photo so it
+// always starts on a fresh full-width row below the photo.
+.quick-facts ~ p {
+  clear: both;
+}
+
+
 // Profile
 
 .profile {
@@ -217,7 +269,9 @@ ul.task-list input[type="checkbox"] {
 
 @media (min-width: 576px) {
   .profile {
-    width: 30%;
+    // Photo aspect ratio is ~3:4 (354x472). 180px wide gives ~240px tall,
+    // matching the .quick-facts grid (with current padding/gap settings).
+    width: 180px;
 
     .address {
       p {
@@ -687,9 +741,10 @@ footer.sticky-bottom {
     list-style: none;
     padding: 0;
     margin-top: 0;
+    font-size: 1.05rem;
 
     li {
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
 
       .preview {
       }

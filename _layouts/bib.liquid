@@ -82,10 +82,10 @@
           {%- if forloop.last and author_array_limit == author_array_size %}and&nbsp;{% endif -%}
         {% endif %}
         {%- if author_is_self -%}
-          <em>
+          <strong>
             {{- author.first }}
             {{ author_last_html -}}
-          </em>
+          </strong>
         {%- else -%}
           {%- if coauthor_url -%}
             <a href="{{ coauthor_url }}">
@@ -181,6 +181,16 @@
     <div class="periodical">
       {{ entry.note | strip }}
     </div>
+    {% if entry.author_order == 'alphabetical-corresponding' %}
+      <div class="periodical author-order-note">
+        <em>† denotes corresponding author.</em>
+      </div>
+    {% endif %}
+    {% if entry.author_order == 'co-first' %}
+      <div class="periodical author-order-note">
+        <em>* denotes equal contribution.</em>
+      </div>
+    {% endif %}
 
     <!-- Links/Buttons -->
     <div class="links">
@@ -267,11 +277,7 @@
         {% assign entry_has_google_scholar_badge = true %}
       {% endif %}
 
-      {% assign entry_has_inspirehep_badge = false %}
-      {% if entry.inspirehep_id %}
-        {% assign entry_has_inspirehep_badge = true %}
-      {% endif %}
-      {% if entry_has_altmetric_badge or entry_has_dimensions_badge or entry_has_google_scholar_badge or entry_has_inspirehep_badge %}
+      {% if entry_has_altmetric_badge or entry_has_dimensions_badge or entry_has_google_scholar_badge %}
         <div class="badges">
           {% if site.enable_publication_badges.altmetric and entry_has_altmetric_badge %}
             <span
@@ -317,18 +323,6 @@
               <img
                 src="https://img.shields.io/badge/scholar-{% google_scholar_citations site.scholar_userid entry.google_scholar_id %}-4285F4?logo=googlescholar&labelColor=beige"
                 alt="{% google_scholar_citations site.scholar_userid entry.google_scholar_id %} Google Scholar citations"
-              >
-            </a>
-          {% endif %}
-          {% if site.enable_publication_badges.inspirehep and entry_has_inspirehep_badge %}
-            <a
-              href="https://inspirehep.net/literature/{{ entry.inspirehep_id }}"
-              aria-label="Inspirehep link"
-              role="button"
-            >
-              <img
-                src="https://img.shields.io/badge/inspire-{% inspirehep_citations entry.inspirehep_id %}-001628?logo=inspire&logoColor=001628&labelColor=beige"
-                alt="{% inspirehep_citations entry.inspirehep_id %} InspireHEP citations"
               >
             </a>
           {% endif %}
